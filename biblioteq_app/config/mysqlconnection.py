@@ -6,7 +6,7 @@ class MySQLConnection:
         connection = pymysql.connect(host='localhost',
                                      user='root',
                                      password='rootadmin',
-                                     db=db,
+                                     db='biblioteq',
                                      charset='utf8mb4',
                                      cursorclass=pymysql.cursors.DictCursor,
                                      autocommit=True)
