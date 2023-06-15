@@ -3,12 +3,31 @@ from biblioteq_app import app
 from biblioteq_app.models.user import User
 
 
+@app.route('/books/add')
+def add_book():
+    if not 'user_id' in session:
+        return redirect('/')
 
-# @app.route('/dashboard')
-# def dashboard():
-#     if not 'user_id' in session:
-#         return redirect('/')
 
-#     user = User.get_logged_in_user()
+    return render_template('add_book.html')
 
-#     return render_template('dashboard.html', user=user)
+
+@app.route('/books/add', methods=['POST'])
+def create_book():
+    if not 'user_id' in session:
+        return redirect('/')
+
+    data = {
+        "title": request.form["title"],
+        "author_id": 0,
+        "user_id": session["user_id"]
+    }
+
+
+
+    new_book_id = Book.save(data)
+    review_data["book_id"] = new_book_id
+
+    Review.save(review_data)
+
+    return redirect(f'/books/{new_book_id}')

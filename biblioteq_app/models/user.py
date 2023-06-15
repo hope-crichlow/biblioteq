@@ -12,22 +12,23 @@ PHONE_REGEX = re.compile(r'^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$')
 
 db = 'biblioteq'
 
+
 class User:
     def __init__(self, data):
-        self.id = data['id']
+        self.user_id = data['user_id']
         self.first_name = data['first_name']
         self.last_name = data['last_name']
         self.email = data['email']
         self.phone_number = data['phone_number']
         self.password = data['password']
-        self.address_id = data['address_id']
-        self.rate = data['rate']
+        # self.address_id = data['address_id']
+        # self.rate = data['rate']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
 
-        self.reviews = []
-        self.rate = None
-        self.address_id = None
+        # self.reviews = []
+        # self.rate = None
+        # self.address_id = None
 
     @classmethod
     def is_email_unique(cls, data):
@@ -48,7 +49,7 @@ class User:
 
     @classmethod
     def get_logged_in_user(cls):
-        query = "SELECT * FROM users WHERE id = %(user_id)s;"
+        query = "SELECT * FROM users WHERE user_id = %(user_id)s;"
 
         results = connectToMySQL('db').query_db(query, session)
 
