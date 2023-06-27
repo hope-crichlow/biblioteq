@@ -1,6 +1,7 @@
 from flask import render_template, redirect, session, request
 from biblioteq_app import app
 from biblioteq_app.models.user import User
+from biblioteq_app.models.book import Book
 from flask_bcrypt import Bcrypt
 
 bcrypt = Bcrypt(app)
@@ -15,10 +16,12 @@ def index():
 def dashboard():
     if not 'user_id' in session:
         return redirect('/')
-
+    data = {
+        'id': session['user_id']
+    }
     user = User.get_logged_in_user()
-
-    return render_template('dashboard.html', user=user)
+    books = Book.get_all_for_dashboard()
+    return render_template('dashboard.html', user=user, books=books)
 
 @app.route('/register', methods=['POST'])
 def register():

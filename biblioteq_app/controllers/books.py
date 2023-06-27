@@ -1,6 +1,22 @@
 from flask import render_template, redirect, session, request
 from biblioteq_app import app
 from biblioteq_app.models.user import User
+from biblioteq_app.models.book import Book
+
+
+
+
+@app.route('/books')
+def bookshelf():
+    if not 'user_id' in session:
+        return redirect('/')
+
+
+    books = Book.get_all_for_dashboard()
+    user = User.get_logged_in_user()
+    print(books)
+    return render_template('bookshelf.html', books=books, user=user)
+
 
 
 @app.route('/books/add')
@@ -19,15 +35,48 @@ def create_book():
 
     data = {
         "title": request.form["title"],
-        "author_id": 0,
+        "author": request.form["author"],
+        "isbn": request.form["isbn"],
+        "due_date": request.form["due_date"],
+        "is_returned": request.form["is_returned"],
         "user_id": session["user_id"]
     }
 
 
-
+    print('****************')
+    print(data)
     new_book_id = Book.save(data)
-    review_data["book_id"] = new_book_id
 
-    Review.save(review_data)
 
     return redirect(f'/books/{new_book_id}')
+
+@app.route('/books/<int:book_id>')
+def one_book(book_id):
+    if not 'user_id' in session:
+        return redirect('/')
+
+    user = User.get_logged_in_user()
+    book_to_display = Book.get_one_book({ "id": book_id })
+
+    if not book_to_display:
+        return redirect('/books')
+    
+    return render_template('one_book.html', book=book_to_display, user=user)
+
+@app.route('/books/return')
+def books_return_request():
+    if not 'user_id' in session:
+        return redirect('/')
+
+    books = Book.get_all_for_dashboard()
+    user = User.get_logged_in_user()
+    print(books)
+    return render_template('book_return.html', books=books, user=user)
+
+@app.route('/books/<int:book_id>/delete')
+def delete_book(book_id):
+    if not 'user_id' in session:
+        return redirect('/books')
+
+    Book.delete_book({ "id": book_id })
+    return redirect('/books')

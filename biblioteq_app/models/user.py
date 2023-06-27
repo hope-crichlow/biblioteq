@@ -10,7 +10,7 @@ NAMES_REGEX = re.compile(r'^[a-zA-Z]+$')
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9+._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 PHONE_REGEX = re.compile(r'^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$')
 
-db = 'biblioteq'
+db = 'book_buddy'
 
 
 class User:
@@ -132,4 +132,4 @@ class User:
             flash('Invalid email/password')
             return False
 
-        return user_in_db.id
+        return user_in_db.user_id

@@ -21,9 +21,39 @@
 		<div class="container">
 			<nav class="row">
 				<h3 class="col-sm-8">Welcome {{ user.first_name }}</h3>
-        <a href="/books/add" class="col-sm-2">Add a Book</a>
+				<a href="/books/add" class="col-sm-2">Add a Book</a>
+				<a href="/books/return" class="col-sm-2">Return a Book</a>
+				<a href="/books" class="col-sm-2">Your Bookshelf</a>
 				<a href="/logout" class="col-sm-2">Logout</a>
 			</nav>
+			<main>
+				<div class="col-sm-6"></div>
+				<div class="col-sm-6">
+					<h2>Hi {{ user.first_name }}! Schedule Your Next Return</h2>
+					<table class="row">
+						<thead>
+							<tr>
+								<th>Title</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<tbody class="all_books">
+							{% for book in books %}
+							<tr>
+								<td>{{book.title}}</td>
+								<td>
+									<a href="/books/{{book.id}}">View</a>
+									{% if book.user_id == session['user_id'] %} &nbsp;|
+									<a href="/books/{{book.id}}/edit">Edit</a> &nbsp;|
+									<a href="/books/{{book.id}}/delete">Delete</a>
+									{% endif %}
+								</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</main>
 		</div>
 	</body>
 </html>
