@@ -1,51 +1,68 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<title>Address Selection</title>
-		<meta charset="utf-8" />
-    <script async
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCA-ogZ39JUfxw9x8xBm3ypurOXaIS3E5s&libraries=places&callback=initMap">
-</script>
-		<link rel="stylesheet" href="./style.css" />
-		<script src="./index.js"></script>
-	</head>
-	<body>
-		<div class="card-container">
-			<div class="panel">
-				<div>
-					<img
-						class="sb-title-icon"
-						src="https://fonts.gstatic.com/s/i/googlematerialicons/location_pin/v5/24px.svg"
-						alt=""
-					/>
-					<span class="sb-title">Address Selection</span>
-				</div>
-				<input type="text" placeholder="Address" id="location-input" />
-				<input type="text" placeholder="Apt, Suite, etc (optional)" />
-				<input type="text" placeholder="City" id="locality-input" />
-				<div class="half-input-container">
-					<input
-						type="text"
-						class="half-input"
-						placeholder="State/Province"
-						id="administrative_area_level_1-input"
-					/>
-					<input
-						type="text"
-						class="half-input"
-						placeholder="Zip/Postal code"
-						id="postal_code-input"
-					/>
-				</div>
-				<input type="text" placeholder="Country" id="country-input" />
-				<button class="button-cta">Set Pick-Up Location</button>
+{% extends "base.html" %} {% block title %}Book Return{% endblock title%} {%
+block head%} {{ super() }} {% endblock head %} {% block content %}
+<div class="container">
+	<main>
+		{{self.title()}}
+		<div class="row">
+			<div class="col-sm-5 pickup-form">
+				<form>
+					<h6>Where can we pick up your books?</h6>
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<label for="pickupLocation"></label>
+							<input
+								type="text"
+								class="form-control"
+								id="pickupLocation"
+								placeholder="Add Pick Off location"
+							/>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="dropoffLocation"></label>
+							<input
+								type="text"
+								class="form-control"
+								id="dropoffLocation"
+								placeholder="Add Drop Off location"
+							/>
+						</div>
+					</div>
+					<div class"form-group">
+						<div class="form-group col-md-4">
+							<label for="selectDriver"></label>
+							<select id="selectDriver" class="form-control" placeholder="Select Driver">
+								<option selected>Select Driver</option>
+								<option>Driver 2</option>
+								<option>Driver 3</option>
+							</select>
+						</div>
+						<div class="form-group col-md-4">
+							<label for="pickupTime"></label>
+							<select id="pickupTime" class="form-control" placeholder="Pick up now">
+								<option selected>Pick-up now</option>
+								<option>End of Day</option>
+								<option>Tomorrow</option>
+							</select>
+						</div>
+						<div class="form-group col-md-4">
+							<label for="booksToReturn"></label>
+							<select id="booksToReturn" class="form-control" placeholder="Books to be returned">
+								<option selected>Books to be returned</option>
+								<option>Book 2</option>
+								<option>Book 3</option>
+							</select>
+						</div>
+					</div>
+
+
+					<div class="form-group">
+						<button type="button" class="btn btn-outline-dark">Allow Location Access</button>
+						<button type="button" class="btn btn-outline-dark">Set Location on Map</button>
+					</div>
+					<button type="submit" class="btn btn-outline-dark">Request</button>
+				</form>
 			</div>
-			<div class="map" id="gmp-map"></div>
 		</div>
-		<script
-			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCA-ogZ39JUfxw9x8xBm3ypurOXaIS3E5s&libraries=places&callback=initMap&solution_channel=GMP_QB_addressselection_v1_cABC"
-			async
-			defer
-		></script>
-	</body>
-</html>
+	</main>
+</div>
+{% endblock content %}

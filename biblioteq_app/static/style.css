@@ -1,3 +1,8 @@
+body {
+	/* background-color: aliceblue; */
+	background-image: url("./images/seattle_road_map.jpeg");
+}
+
 .card {
 	position: relative;
 	display: -webkit-box;
@@ -14,6 +19,8 @@
 	border: 1px solid rgba(0, 0, 0, 0.125);
 	border-radius: 0.25rem;
 }
+
+/* Nav Bar */
 @media (min-width: 576px) {
 	.navbar-expand-sm {
 		-webkit-box-orient: horizontal;
@@ -65,3 +72,10 @@
 .collapse {
 	display: none;
 }
+/* Nav Bar End */
+
+/* Pick-up Form */
+.pickup-form {
+	background-color: #fff;
+}
+/* Pick-up Form End */

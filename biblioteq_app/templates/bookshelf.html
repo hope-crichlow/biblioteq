@@ -1,59 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link
-			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css"
-			rel="stylesheet"
-			integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp"
-			crossorigin="anonymous"
-		/>
-		<link
-			rel="stylesheet"
-			type="text/css"
-			href="{{ url_for('static', filename='css/my_style.css') }}"
-		/>
-		<title>Biblioteq</title>
-	</head>
-	<body>
-    <nav class="navbar navbar-expand-sm navbar-light bg-light">
-      <a class="navbar-brand" href="/dashboard"> Biblioteq</a>
-      <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExample03" aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="navbar-collapse collapse justify-content-between" id="navbarsExample03" style="">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="/dashboard">Dashboard<span class="sr-only"></span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/books/add">Add A Book</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link " href="books/return">Return A Book</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="dropdown03" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More</a>
-            <div class="dropdown-menu" aria-labelledby="dropdown03">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-          </li>
-        </ul>
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Help<span class="sr-only"></span></a>
-          </li>
-         <li class="nav-item active">
-            <a class="nav-link" href="/logout">Log Out<span class="sr-only"></span></a>
-          </li>
-        </ul>
-      </div>
-    </nav>
+{% extends "base.html" %}
+{% block title %}Bookshelf{% endblock title%}
+{% block head%}
+	{{ super() }}
+{% endblock head %}
+{% block content %}
 		<div class="container">
 
 			<main>
@@ -68,7 +18,7 @@
 									data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail"
 									alt="Thumbnail [100%x225]"
 									style="height: 225px; width: 100%; display: block"
-									src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22208%22%20height%3D%22225%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20208%20225%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_188fdfefd71%20text%20%7B%20fill%3A%23eceeef%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A11pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_188fdfefd71%22%3E%3Crect%20width%3D%22208%22%20height%3D%22225%22%20fill%3D%22%2355595c%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2266.9296875%22%20y%3D%22117.45%22%3EThumbnail%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E"
+									src="{{ url_for('static', filename='images/book_cover_placeholder.png') }}"
 									data-holder-rendered="true"
 								/>
 								<div class="card-body">
@@ -78,7 +28,7 @@
 									</p>
 									<p class="card-text">
 										<small class="text-muted">
-											Due Date: {{book.due_date.strftime('%a, %b %d, %Y') }}
+											Due: {{book.due_date.strftime('%a, %b %d, %Y') }}
 										</small>
 									</p>
 									<p class="card-text">
@@ -96,5 +46,6 @@
 				</div>
 			</main>
 		</div>
-	</body>
-</html>
+{% endblock content %}
+
+
