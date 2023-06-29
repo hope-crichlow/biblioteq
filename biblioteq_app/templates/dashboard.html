@@ -1,18 +1,28 @@
-{% extends "base.html" %}
-{% block title %}Dashboard{% endblock title%} 
-{% block head%}
-	{{ super() }} 
-{% endblock head %} 
-{% block content %}
+{% extends "base.html" %} {% block title %}Dashboard{% endblock title%} {% block
+head%} {{ super() }} {% endblock head %} {% block content %}
 <div class="container">
 	<main>
-		<div class="col-sm-6">
+		<div class="col-md-4">
 			<h2>Hi {{ user.first_name }}! Schedule Your Next Return</h2>
 			<table class="row">
 				<thead>
 					<tr>
-						<th>Title</th>
-						<th>Actions</th>
+						<th>Upcoming Returns</th>
+					</tr>
+				</thead>
+				<tbody class="all_returns">
+					<tr>
+						<td>Return Card</td>
+					</tr>
+					<tr>
+						<td>Return Card</td>
+					</tr>
+				</tbody>
+			</table>
+			<table class="row">
+				<thead>
+					<tr>
+						<th>Bookkshelf</th>
 					</tr>
 				</thead>
 				<tbody class="all_books">
@@ -28,6 +38,21 @@
 						</td>
 					</tr>
 					{% endfor %}
+				</tbody>
+			</table>
+			<table class="row">
+				<thead>
+					<tr>
+						<th>Recommended Drivers</th>
+					</tr>
+				</thead>
+				<tbody class="all_drivers">
+					<tr>
+						<td>Driver Card</td>
+					</tr>
+					<tr>
+						<td>Driver Card</td>
+					</tr>
 				</tbody>
 			</table>
 		</div>
