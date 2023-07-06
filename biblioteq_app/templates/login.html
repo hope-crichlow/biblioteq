@@ -1,0 +1,7 @@
+{% extends "login_form.html" %}
+{% block login_action %}
+<form action= "/login" method="post">
+{% endblock login_action %}
+{% block content %}
+{{ super() }}
+{% endblock content %}

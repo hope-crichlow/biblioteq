@@ -1,0 +1,98 @@
+{% block content %}
+<div class="col-sm-5">
+	<h2>Registration</h2>
+	{% block register_action %} {% endblock register_action %}
+		<div class="form-group row mb-4">
+			<label for="first_name" class="col-sm-4">First Name: </label>
+			<div class="form-group col-sm-8">
+				<input
+					type="text"
+					name="first_name"
+					id="first_name"
+					class="form-control"
+				/>
+				{% with f_name_error =
+				get_flashed_messages(category_filter=['first_name']) %} {% if
+				f_name_error: %} {% for message in f_name_error: %}
+				<p class="text-danger">{{ message }}</p>
+				{% endfor %} {% endif %} {% endwith %}
+			</div>
+		</div>
+		<div class="form-group row mb-4">
+			<label for="last_name" class="col-sm-4">Last Name: </label>
+			<div class="form-group col-sm-8">
+				<input
+					type="text"
+					name="last_name"
+					id="last_name"
+					class="form-control"
+				/>
+				{% with l_name_error =
+				get_flashed_messages(category_filter=['last_name']) %} {% if
+				l_name_error: %} {% for message in l_name_error: %}
+				<p class="text-danger">{{ message }}</p>
+				{% endfor %} {% endif %} {% endwith %}
+			</div>
+		</div>
+		<div class="form-group row mb-4">
+			<label for="email" class="col-sm-4">Email: </label>
+			<div class="form-group col-sm-8">
+				<input type="text" name="email" id="email" class="form-control" />
+				{% with email_error = get_flashed_messages(category_filter=['email']) %}
+				{% if email_error: %} {% for message in email_error: %}
+				<p class="text-danger">{{ message }}</p>
+				{% endfor %} {% endif %} {% endwith %}
+			</div>
+		</div>
+		<div class="form-group row mb-4">
+			<label for="phone_number" class="col-sm-4">Phone Number: </label>
+			<div class="form-group col-sm-8">
+				<input
+					type="text"
+					name="phone_number"
+					id="phone_number"
+					class="form-control"
+				/>
+				{% with phone_number_error =
+				get_flashed_messages(category_filter=['phone_number']) %} {% if
+				phone_number_error: %} {% for message in phone_number_error: %}
+				<p class="text-danger">{{ message }}</p>
+				{% endfor %} {% endif %} {% endwith %}
+			</div>
+		</div>
+		<div class="form-group row mb-4">
+			<label for="password" class="col-sm-4">Password: </label>
+			<div class="form-group col-sm-8">
+				<input
+					type="password"
+					name="password"
+					id="password"
+					class="form-control"
+				/>
+				{% with password_error =
+				get_flashed_messages(category_filter=['password']) %} {% if
+				password_error: %} {% for message in password_error: %}
+				<p class="text-danger">{{ message }}</p>
+				{% endfor %} {% endif %} {% endwith %}
+			</div>
+		</div>
+		<div class="form-group row mb-4">
+			<label for="confirm_password" class="col-sm-4">Confirm Password: </label>
+			<div class="form-group col-sm-8">
+				<input
+					type="password"
+					name="confirm_password"
+					id="confirm_password"
+					class="form-control"
+				/>
+			</div>
+		</div>
+		<input
+			type="submit"
+			value="Register"
+			class="col-sm-4 offset-sm-4 btn btn-primary"
+		/>
+	</form>
+</div>
+
+{% endblock content %}

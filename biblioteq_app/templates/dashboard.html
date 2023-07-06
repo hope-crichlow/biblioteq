@@ -3,7 +3,7 @@ head%} {{ super() }} {% endblock head %} {% block content %}
 <div class="container">
 	<main>
 		<div class="col-md-4">
-			<h2>Hi {{ user.first_name }}! Schedule Your Next Return</h2>
+			<h2>Hi {{ user.first_name|capitalize }}! Schedule Your Next Return</h2>
 			<table class="row">
 				<thead>
 					<tr>
