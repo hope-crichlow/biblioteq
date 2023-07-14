@@ -1,0 +1,7 @@
+{% extends "registration_form.html" %}
+{% block register_action %}
+<form action= "/driver/register" method="post">
+{% endblock register_action %}
+{% block content %}
+{{ super() }}
+{% endblock content %}

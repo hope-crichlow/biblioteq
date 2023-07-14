@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Dashboard{% endblock title%}
+{% block title %}{% endblock title%}
 {% block head%} {{ super() }} {% endblock head %}
 {% block content %}
 <div class="container">
@@ -7,6 +7,11 @@
 	<div class="row">
 		{% include 'registration.html' %}
 		{% include 'login.html' %}
+	</div>
+	<h1>Driver Login and Registration</h1>
+	<div class="row">
+		{% include 'driver_reg.html' %}
+		{% include 'driver_login.html' %}
 	</div>
 </div>
 {% endblock content %}

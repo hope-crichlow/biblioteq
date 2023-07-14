@@ -1,0 +1,50 @@
+{% extends "base.html" %} {% block title %}Dashboard{% endblock title%} {% block
+head%} {{ super() }} {% endblock head %} {% block content %}
+<div class="container">
+	<main>
+		<div class="col-md-4">
+			
+			<table class="row">
+				<thead>
+					<tr>
+						<th>Upcoming Returns</th>
+					</tr>
+				</thead>
+				<tbody class="all_returns">
+					<tr>
+						<td>Return Card</td>
+					</tr>
+					<tr>
+						<td>Return Card</td>
+					</tr>
+				</tbody>
+			</table>
+			<table class="row">
+				<thead>
+					<tr>
+						<th>Bookkshelf</th>
+					</tr>
+				</thead>
+				<tbody class="all_books">
+
+				</tbody>
+			</table>
+			<table class="row">
+				<thead>
+					<tr>
+						<th>Recommended Drivers</th>
+					</tr>
+				</thead>
+				<tbody class="all_drivers">
+					<tr>
+						<td>Driver Card</td>
+					</tr>
+					<tr>
+						<td>Driver Card</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</main>
+</div>
+{% endblock content %}
