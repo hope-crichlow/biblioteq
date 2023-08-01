@@ -57,7 +57,7 @@ class Driver:
 
     @classmethod
     def save(cls, data):
-        query = "INSERT INTO drivers (first_name, last_name, email, phone_number, password, address_id, rate, created_at, updated_at) VALUES (%(first_name)s, %(last_name)s, %(email)s, %(phone_number)s, %(password)s, %(address_id)s, %(rate)s, NOW(), NOW());"
+        query = "INSERT INTO drivers (first_name, last_name, email, phone_number, password, created_at, updated_at) VALUES (%(first_name)s, %(last_name)s, %(email)s, %(phone_number)s, %(pw_hash)s, NOW(), NOW());"
 
         return connectToMySQL('db').query_db(query, data)
 

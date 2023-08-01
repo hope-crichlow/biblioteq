@@ -1,5 +1,6 @@
 {% extends "base.html" %} {% block title %}Dashboard{% endblock title%} {% block
-head%} {{ super() }} {% endblock head %} {% block content %}
+head%} {{ super() }} {% endblock head %} {% block content %} {% include
+'nav.html' %}
 <div class="container">
 	<main>
 		<div class="col-md-4">
@@ -11,6 +12,14 @@ head%} {{ super() }} {% endblock head %} {% block content %}
 					</tr>
 				</thead>
 				<tbody class="all_returns">
+					{% for request in requests %}
+					<tr>
+						<td>{{request.id}}</td>
+						<td>
+							<a href="/requests/{{request.id}}">View</a>
+						</td>
+					</tr>
+					{% endfor %}
 					<tr>
 						<td>Return Card</td>
 					</tr>

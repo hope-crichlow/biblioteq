@@ -1,17 +1,94 @@
-{% extends "base.html" %}
-{% block title %}{% endblock title%}
-{% block head%} {{ super() }} {% endblock head %}
-{% block content %}
-<div class="container">
-	<h1>Reader Login and Registration</h1>
-	<div class="row">
-		{% include 'registration.html' %}
-		{% include 'login.html' %}
+{% extends "base.html" %} {% block title %}{% endblock title%} {% block head%}
+{{ super() }} {% endblock head %} {% block content %}
+
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
+	<a class="navbar-brand" href="/"> Biblioteq</a>
+	
+
+	<div
+		class="navbar-collapse collapse justify-content-between"
+		id="navbarsExample03"
+		style=""
+	>
+		<ul class="navbar-nav mr-auto">
+		
+		</ul>
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item active">
+				<a class="nav-link" href="/reader"
+					><span class="sr-only">Reader Log in</span
+				></a>
+			</li>
+			<li class="nav-item active">
+				<a class="nav-link" href="/driver"
+					><span class="sr-only">Driver Log in</span
+				></a>
+			</li>
+		</ul>
 	</div>
-	<h1>Driver Login and Registration</h1>
-	<div class="row">
-		{% include 'driver_reg.html' %}
-		{% include 'driver_login.html' %}
+</nav>
+<div class="container">
+	<div>
+		<h2>How Biblioteq Works</h2>
+		<h4>Biblioteq is the easiest way for you to get the books you love returned</h4>
+	</div>
+					
+	<div class="row" display="flex">
+	
+		<div class="col-md-4">
+			<div class="card mb-4 box-shadow" display="flex">
+				<img
+					class="card-img-top"
+					data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail"
+					alt="Thumbnail [100%x225]"
+					style="height: 225px; width: 100%; display: block"
+					src="{{ url_for('static', filename='images/book_cover_placeholder.png') }}"
+					data-holder-rendered="true"
+				/>
+				<div class="card-body">
+					<p class="card-text">
+						<h5 class="card-title">See People</h5>
+						<small class="text"> lorem </small>
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="card mb-4 box-shadow" display="flex">
+				<img
+					class="card-img-top"
+					data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail"
+					alt="Thumbnail [100%x225]"
+					style="height: 225px; width: 100%; display: block"
+					src="{{ url_for('static', filename='images/book_cover_placeholder.png') }}"
+					data-holder-rendered="true"
+				/>
+				<div class="card-body">
+					<p class="card-text">
+						<h5 class="card-title">Offer/Request Ride</h5>
+						<small class="text"> lorem </small>
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="card mb-4 box-shadow" display="flex">
+				<img
+					class="card-img-top"
+					data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail"
+					alt="Thumbnail [100%x225]"
+					style="height: 225px; width: 100%; display: block"
+					src="{{ url_for('static', filename='images/book_cover_placeholder.png') }}"
+					data-holder-rendered="true"
+				/>
+				<div class="card-body">
+					<p class="card-text">
+						<h5 class="card-title">Wait For Reply</h5>
+						<small class="text"> lorem </small>
+					</p>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 {% endblock content %}

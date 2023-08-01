@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}{% endblock title%}
+{% block head%} {{ super() }} {% endblock head %}
+{% block content %}
+<div class="container">
+	<h1>Driver Login and Registration</h1>
+	<div class="row">
+		{% include 'driver_reg.html' %}
+		{% include 'driver_login.html' %}
+	</div>
+</div>
+{% endblock content %}
