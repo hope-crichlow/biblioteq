@@ -48,10 +48,10 @@ class Driver:
             return cls(results[0])
 
     @classmethod
-    def get_logged_in_driver(cls):
-        query = "SELECT * FROM drivers WHERE driver_id = %(driver_id)s;"
+    def get_logged_in_driver(cls, data):
+        query = "SELECT * FROM drivers WHERE driver_id = %(id)s;"
 
-        results = connectToMySQL('db').query_db(query, session)
+        results = connectToMySQL('db').query_db(query, data)
 
         return cls(results[0])
 

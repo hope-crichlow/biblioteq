@@ -8,13 +8,13 @@ from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt(app)
 
 
-@app.route("/")
-def index():
-    return render_template("index.html")
+# @app.route("/")
+# def index():
+#     return render_template("index.html")
 
 
 @app.route("/driver_dashboard")
-def dashboard():
+def driver_dashboard():
     if "driver_id" not in session:
         return redirect("/")
     data = {"id": session["driver_id"]}
@@ -23,7 +23,7 @@ def dashboard():
 
 
 @app.route("/driver/register", methods=["POST"])
-def register():
+def driver_register():
     data = {
         "first_name": request.form["first_name"],
         "last_name": request.form["last_name"],
@@ -48,7 +48,7 @@ def register():
 
 
 @app.route("/driver/login", methods=["POST"])
-def login():
+def driver_login():
     driver_in_db = Driver.validate_log(request.form)
 
     if not driver_in_db:
