@@ -6,25 +6,25 @@ from flask_bcrypt import Bcrypt
 
 bcrypt = Bcrypt(app)
 
-NAMES_REGEX = re.compile(r'^[a-zA-Z]+$')
-EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9+._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
-PHONE_REGEX = re.compile(r'^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$')
+NAMES_REGEX = re.compile(r"^[a-zA-Z]+$")
+EMAIL_REGEX = re.compile(r"^[a-zA-Z0-9+._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$")
+PHONE_REGEX = re.compile(r"^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$")
 
-db = 'book_buddy'
+db = "book_buddy"
 
 
 class User:
     def __init__(self, data):
-        self.user_id = data['user_id']
-        self.first_name = data['first_name']
-        self.last_name = data['last_name']
-        self.email = data['email']
-        self.phone_number = data['phone_number']
-        self.password = data['password']
+        self.user_id = data["user_id"]
+        self.first_name = data["first_name"]
+        self.last_name = data["last_name"]
+        self.email = data["email"]
+        self.phone_number = data["phone_number"]
+        self.password = data["password"]
         # self.address_id = data['address_id']
         # self.rate = data['rate']
-        self.created_at = data['created_at']
-        self.updated_at = data['updated_at']
+        self.created_at = data["created_at"]
+        self.updated_at = data["updated_at"]
 
         # self.reviews = []
         # self.rate = None
@@ -34,14 +34,14 @@ class User:
     def is_email_unique(cls, data):
         query = "SELECT * FROM users WHERE email = %(email)s;"
 
-        results = connectToMySQL('db').query_db(query, data)
+        results = connectToMySQL("db").query_db(query, data)
         return len(results) == 0
 
     @classmethod
     def user_in_db(cls, data):
         query = "SELECT * FROM users WHERE email = %(email)s;"
 
-        results = connectToMySQL('db').query_db(query, data)
+        results = connectToMySQL("db").query_db(query, data)
         if len(results) == 0:
             return False
         else:
@@ -51,7 +51,7 @@ class User:
     def get_logged_in_user(cls):
         query = "SELECT * FROM users WHERE user_id = %(user_id)s;"
 
-        results = connectToMySQL('db').query_db(query, session)
+        results = connectToMySQL("db").query_db(query, session)
 
         return cls(results[0])
 
@@ -59,63 +59,83 @@ class User:
     def save(cls, data):
         query = "INSERT INTO users (first_name, last_name, email, phone_number, password, created_at, updated_at) VALUES (%(first_name)s, %(last_name)s, %(email)s, %(phone_number)s, %(password)s, NOW(), NOW());"
 
-        return connectToMySQL('db').query_db(query, data)
+        return connectToMySQL("db").query_db(query, data)
+
+    @classmethod
+    def edit(cls, data):
+        query = "UPDATE users SET first_name=%(first_name)s, last_name=%(last_name)s, email=%(email)s, phone_number=%(phone_number)s, password=%(password)s WHERE user_id = %(user_id)s;"
+
+        print("User Updated*****************")
+        print(data)
+
+        results = connectToMySQL("db").query_db(query, data)
+        print(results)
+
+        return results
 
     @staticmethod
     def validate_reg(user):
         is_valid = True
 
-        if len(user['first_name']) == 0:
-            flash('First Name is required', 'first_name')
+        if len(user["first_name"]) == 0:
+            flash("First Name is required", "first_name")
             is_valid = False
-        elif len(user['first_name']) < 2:
-            flash('First Name must be at least 2 characters', 'first_name')
+        elif len(user["first_name"]) < 2:
+            flash("First Name must be at least 2 characters", "first_name")
             is_valid = False
-        elif not NAMES_REGEX.match(user['first_name']):
+        elif not NAMES_REGEX.match(user["first_name"]):
             flash(
-                'First Name must only contain characters from the alphabet', 'first_name')
+                "First Name must only contain characters from the alphabet",
+                "first_name",
+            )
             is_valid = False
 
-        if len(user['last_name']) == 0:
-            flash('Last Name is required', 'last_name')
+        if len(user["last_name"]) == 0:
+            flash("Last Name is required", "last_name")
             is_valid = False
-        elif len(user['last_name']) < 2:
-            flash('Last Name must be at least 2 characters', 'last_name')
+        elif len(user["last_name"]) < 2:
+            flash("Last Name must be at least 2 characters", "last_name")
             is_valid = False
-        elif not NAMES_REGEX.match(user['last_name']):
-            flash('Last Name must only contain characters from the alphabet', 'last_name')
+        elif not NAMES_REGEX.match(user["last_name"]):
+            flash(
+                "Last Name must only contain characters from the alphabet", "last_name"
+            )
             is_valid = False
 
-        if len(user['email']) == 0:
-            flash('Email is required', 'email')
+        if len(user["email"]) == 0:
+            flash("Email is required", "email")
             is_valid = False
-        elif not EMAIL_REGEX.match(user['email']):
+        elif not EMAIL_REGEX.match(user["email"]):
             flash(
-                'Invalid email format, must contain @ and . like someusername@domain.com', 'email')
+                "Invalid email format, must contain @ and . like someusername@domain.com",
+                "email",
+            )
             is_valid = False
         elif not User.is_email_unique(user):
-            flash('You have already registered with that email, please log in', 'email')
+            flash("You have already registered with that email, please log in", "email")
             is_valid = False
 
-        if len(user['phone_number']) == 0:
-            flash('phone number is required', 'phone_number')
+        if len(user["phone_number"]) == 0:
+            flash("phone number is required", "phone_number")
             is_valid = False
-        elif len(user['phone_number']) < 10:
-            flash('Phone Number must be at least 10 characters', 'phone_number')
+        elif len(user["phone_number"]) < 10:
+            flash("Phone Number must be at least 10 characters", "phone_number")
             is_valid = False
-        elif not PHONE_REGEX.match(user['phone_number']):
+        elif not PHONE_REGEX.match(user["phone_number"]):
             flash(
-                'Invalid phone number format, must contain - like xxx-xxx-xxxx', 'phone_number')
+                "Invalid phone number format, must contain - like xxx-xxx-xxxx",
+                "phone_number",
+            )
             is_valid = False
 
-        if len(user['password']) == 0:
-            flash('Password is required', 'password')
+        if len(user["password"]) == 0:
+            flash("Password is required", "password")
             is_valid = False
-        elif len(user['password']) < 8:
-            flash('Password must be at least 8 characters in length', 'password')
+        elif len(user["password"]) < 8:
+            flash("Password must be at least 8 characters in length", "password")
             is_valid = False
-        elif user['password'] != user['confirm_password']:
-            flash('Password must match your Confirm Password', 'password')
+        elif user["password"] != user["confirm_password"]:
+            flash("Password must match your Confirm Password", "password")
             is_valid = False
 
         return is_valid
@@ -125,11 +145,11 @@ class User:
         user_in_db = User.user_in_db(log_user)
 
         if not user_in_db:
-            flash('Invalid email/password')
+            flash("Invalid email/password")
             return False
 
-        if not bcrypt.check_password_hash(user_in_db.password, log_user['password']):
-            flash('Invalid email/password')
+        if not bcrypt.check_password_hash(user_in_db.password, log_user["password"]):
+            flash("Invalid email/password")
             return False
 
         return user_in_db.user_id

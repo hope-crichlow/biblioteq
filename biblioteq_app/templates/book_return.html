@@ -1,64 +1,93 @@
 {% extends "base.html" %} {% block title %}Book Return{% endblock title%} {%
 block head%} {{ super() }} {% endblock head %} {% block content %}
+{% include'nav.html' %}
 <div class="container">
 	<main>
-		{{self.title()}}
+	
 		<div class="row">
-			<div class="col-sm-5 pickup-form">
+			<div class="col-7 pickup-form">
 				<form>
 					<h6>Where can we pick up your books?</h6>
 					<div class="form-row">
-						<div class="form-group col-md-6">
-							<label for="pickupLocation"></label>
-							<input
-								type="text"
-								class="form-control"
-								id="pickupLocation"
-								placeholder="Add Pick Off location"
-							/>
+
+						<div class="form-group col-md-4">
+							<label for="selectLibrary"></label>
+							<select id="selectLibrary" class="form-control" placeholder="Select Library" name="library_id">
+								<option selected>Select Library</option>
+								{% for library in libraries %}
+								<option value="{{library.library_id}}">{{library.name}}</option>
+								{% endfor %}
+							</select>
 						</div>
-						<div class="form-group col-md-6">
-							<label for="dropoffLocation"></label>
-							<input
-								type="text"
-								class="form-control"
-								id="dropoffLocation"
-								placeholder="Add Drop Off location"
-							/>
+
+						<div class="form-group col-md-4">
+							<label for="pickup_address_id"></label>
+							<select id="selectAddress" class="form-control" name="pickup_address_id" placeholder="Select Address">
+								<option selected>Select Address</option>
+								{% for address in addresses %}
+								<option value="{{address.address_id}}">{{address.street_address_1}} {{address.city}}, {{address.region}} {{address.zip_code}} </option>
+								{% endfor %}
+							</select>
 						</div>
+						
+						<div class="form-group row mb-2">
+								<label for="special_notes" class="col-sm-4">Special Notes: </label>
+								<div class="col-sm-8">
+										<textarea name="special_notes" id="special_notes" rows="4" class="form-control" ></textarea>
+								</div>
+            </div>
 					</div>
+
 					<div class"form-group">
 						<div class="form-group col-md-4">
-							<label for="selectDriver"></label>
-							<select id="selectDriver" class="form-control" placeholder="Select Driver">
+							<label for="assigned_driver_id"></label>
+							<select id="assigned_driver_id" class="form-control" name="assigned_driver_id" placeholder="Select Driver">
 								<option selected>Select Driver</option>
-								<option>Driver 2</option>
-								<option>Driver 3</option>
+								{% for driver in drivers %}
+								<option value="{{driver.driver_id}}">{{driver.first_name}}</option>
+								{% endfor %}
 							</select>
+
+							<label for="delivery_fee">Delivery Fee</label>
+							<div class="input-group col-md-4">
+								<div class="input-group-prepend">
+									
+									<span class="input-group-text">$</span>
+								</div>
+								<input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="delivery_fee">
+								<div class="input-group-append">
+									<span class="input-group-text">.00</span>
+								</div>
+							</div>
+
 						</div>
 						<div class="form-group col-md-4">
-							<label for="pickupTime"></label>
-							<select id="pickupTime" class="form-control" placeholder="Pick up now">
-								<option selected>Pick-up now</option>
-								<option>End of Day</option>
-								<option>Tomorrow</option>
-							</select>
+							<label for="pickupDate">Select Date For Pickup</label>
+							<input type="date" id="pickupDate" name="requested_return_date">
 						</div>
 						<div class="form-group col-md-4">
-							<label for="booksToReturn"></label>
-							<select id="booksToReturn" class="form-control" placeholder="Books to be returned">
-								<option selected>Books to be returned</option>
-								<option>Book 2</option>
-								<option>Book 3</option>
+							<label for="pickupTime">Select Time For Pickup</label>
+							<input type="time" id="pickupTime" name="requested_return_time">
+						</div>
+
+
+						<div class="form-group col-md-4">
+							<label for="selectBooks"></label>
+							<select id="selectBooks" name="selected_book" class="form-control custom" placeholder="Select Books" size="2" multiple>
+								<option selected value=0>Select Books</option>
+								{% for book in books %}
+								<option value="{{book.book_id}}">{{book.title}} by {{book.author}}</option>
+								{% endfor %}
 							</select>
+						</div>
+						
+						<div class="form-group col-md-4">
+							<button type="button" class="btn btn-outline-dark">Allow Location Access</button>
+							<button type="button" class="btn btn-outline-dark">Set Location on Map</button>
 						</div>
 					</div>
 
 
-					<div class="form-group">
-						<button type="button" class="btn btn-outline-dark">Allow Location Access</button>
-						<button type="button" class="btn btn-outline-dark">Set Location on Map</button>
-					</div>
 					<button type="submit" class="btn btn-outline-dark">Request</button>
 				</form>
 			</div>

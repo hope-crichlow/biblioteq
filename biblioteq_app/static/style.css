@@ -1,6 +1,6 @@
 body {
-	/* background-color: aliceblue; */
-	background-image: url("./images/seattle_road_map.jpeg");
+	background-color: #e4f4f3;
+	/* background-image: url("./images/seattle_road_map.jpeg"); */
 }
 
 .card {
@@ -17,7 +17,7 @@ body {
 	background-color: #fff;
 	background-clip: border-box;
 	border: 1px solid rgba(0, 0, 0, 0.125);
-	border-radius: 0.25rem;
+	border-radius: 0.4rem;
 }
 
 /* Nav Bar */
@@ -79,3 +79,21 @@ body {
 	background-color: #fff;
 }
 /* Pick-up Form End */
+
+/* Boarder-Container */
+.boarder-container {
+	display: flex-wrap;
+	background-color: #a1dbf1;
+	border-radius: 0.4rem;
+	width: 100%;
+}
+
+.row > * {
+	/* flex-shrink: 0;
+	width: 100%;
+	max-width: 100%;
+	padding-right: calc(var(--bs-gutter-x) * .5);
+	padding-left: calc(var(--bs-gutter-x) * .5); */
+	margin-top: calc(var(--bs-gutter-x) * 0.5);
+}
+/* Boarder-Container End */

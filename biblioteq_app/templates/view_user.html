@@ -1,0 +1,23 @@
+{% extends "base.html" %} {% block title %}Dashboard{% endblock title%} {% block
+head%} {{ super() }} {% endblock head %} {% include 'nav.html' %} {% block
+content %}
+<div class="card">
+	<dl class="card-body row">
+		<dt class="col-sm-3">Name</dt>
+		<dd class="col-sm-9">
+			{{ user.first_name|capitalize }} {{ user.last_name|capitalize }}
+		</dd>
+		<dt class="col-sm-3">Email</dt>
+		<dd class="col-sm-9">{{ user.email }}</dd>
+
+		<dt class="col-sm-3">Phone Number</dt>
+		<dd class="col-sm-9">
+			<p>{{ user.phone_number }}</p>
+		</dd>
+		<button class="btn" type="submit">
+			<a href="/reader/account/edit">Edit</a>
+		</button>
+
+	</dl>
+</div>
+{% endblock content %}

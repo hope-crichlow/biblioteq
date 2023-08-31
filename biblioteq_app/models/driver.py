@@ -133,3 +133,32 @@ class Driver:
             return False
 
         return driver_in_db.driver_id
+    
+    
+    @classmethod
+    def get_all_drivers(cls):
+        query = "SELECT * FROM drivers;"
+
+        results = connectToMySQL('book_buddy').query_db(query)
+        drivers = []
+        for driver in results:
+            drivers.append(cls(driver))
+        
+        return drivers
+    
+    @classmethod
+    def get_one_driver(cls, data):
+        query = "SELECT * FROM drivers WHERE drivers.driver_id = %(id)s;"
+
+        results = connectToMySQL('book_buddy').query_db(query, data)
+        print('/////////', results)
+
+        driver = cls(results[0])
+
+        return driver
+
+    @classmethod
+    def delete_driver(cls, data):
+
+        query = "DELETE FROM drivers WHERE driver_id = %(id)s;"
+        connectToMySQL('book_buddy').query_db(query, data)

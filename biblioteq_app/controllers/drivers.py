@@ -56,3 +56,27 @@ def driver_login():
 
     session["driver_id"] = driver_in_db
     return redirect("/driver_dashboard")
+
+@app.route('/drivers')
+def drivers():
+    if not 'user_id' in session:
+        return redirect('/')
+    
+    drivers = Driver.get_all_drivers()
+    user = User.get_logged_in_user()
+    print(drivers)
+    return render_template('drivers.html', drivers=drivers, user=user)
+
+@app.route('/drivers/<int:driver_id>')
+def one_driver(driver_id):
+    if not 'user_id' in session:
+        return redirect('/')
+
+    user = User.get_logged_in_user()
+    driver_to_display = Driver.get_one_driver({ "id": driver_id })
+
+    if not driver_to_display:
+        return redirect('/drivers')
+    
+    return render_template('one_driver.html', driver=driver_to_display, user=user)
+

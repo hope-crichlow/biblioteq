@@ -1,9 +1,11 @@
 from flask import render_template, redirect, session, request
 from biblioteq_app import app
+from biblioteq_app.models.address import Address
 from biblioteq_app.models.user import User
 from biblioteq_app.models.book import Book
-
-
+from biblioteq_app.models.request import Request
+from biblioteq_app.models.driver import Driver
+from biblioteq_app.models.library import Library
 
 
 @app.route('/books')
@@ -63,15 +65,6 @@ def one_book(book_id):
     
     return render_template('one_book.html', book=book_to_display, user=user)
 
-@app.route('/books/return')
-def books_return_request():
-    if not 'user_id' in session:
-        return redirect('/')
-
-    books = Book.get_all_for_dashboard()
-    user = User.get_logged_in_user()
-    print(books)
-    return render_template('book_return.html', books=books, user=user)
 
 @app.route('/books/<int:book_id>/delete')
 def delete_book(book_id):

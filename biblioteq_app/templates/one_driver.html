@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Drivers{% endblock title%}
+{% block head%}
+	{{ super() }}
+{% endblock head %}
+{% block content %}
+{% include'nav.html' %}
+		<div class="container">
+
+			<main>
+				<h2>{{ user.first_name|capitalize }}, Schedule your next return</h2>
+				<div class="container">
+					<div class="row boarder-container" display="flex">
+
+						<div class="col-md-4">
+							<div class="card mb-4 box-shadow" display="flex">
+								<img
+									class="card-img-top"
+									data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail"
+									alt="Thumbnail [100%x225]"
+									style="height: 225px; width: 100%; display: block"
+									src="{{ url_for('static', filename='images/faceless_avatar_f.png') }}"
+									data-holder-rendered="true"
+								/>
+								<div class="card-body">
+									<p class="card-text">
+                    <h5 class="card-title">{{driver.first_name}}</h5>
+									  <small class="text"> ****** 34 rides </small>
+									</p>
+									<p class="card-text">
+										<small class="text"> Last seen 2 hrs ago </small>
+								
+									</p>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</main>
+		</div>
+{% endblock content %}
+
+
