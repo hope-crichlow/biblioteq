@@ -18,18 +18,12 @@ from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt(app)
 
 
-app = Flask("Google Login App")
-app.secret_key = os.getenv(
-    "GOOGLE_CLIENT_SECRET"
-)  # make sure this matches with that's in client_secret.json
-
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"  # to allow Http traffic for local dev
 
-GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
+GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
 client_secrets_file = os.path.join(
     pathlib.Path(__file__).parent.parent.parent, "client_secret.json"
 )
-print("client_secrets_file", client_secrets_file)
 
 
 flow = Flow.from_client_secrets_file(
@@ -39,7 +33,7 @@ flow = Flow.from_client_secrets_file(
         "https://www.googleapis.com/auth/userinfo.email",
         "openid",
     ],
-    redirect_uri="http://localhost/callback",
+    redirect_uri="http://localhost:5000/callback",
 )
 
 
@@ -51,7 +45,6 @@ def login_is_required(function):
             return function()
 
     return wrapper
-
 
 
 @app.route("/")
@@ -93,9 +86,6 @@ def protected_area():
     return (
         f"Hello {session['name']}! <br/> <a href='/logout'><button>Logout</button></a>"
     )
-
-
-
 
 
 @app.route("/reader")
