@@ -1,4 +1,13 @@
-from flask import render_template, redirect, session, request
+import os
+import pathlib
+import requests
+from flask import Flask, abort, render_template, redirect, session, request
+from google.oauth2 import id_token
+from google_auth_oauthlib.flow import Flow
+from pip._vendor import cachecontrol
+
+# from cachecontrol import CacheControl
+import google.auth.transport.requests
 from biblioteq_app import app
 from biblioteq_app.models.user import User
 from biblioteq_app.models.book import Book
@@ -9,9 +18,84 @@ from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt(app)
 
 
+app = Flask("Google Login App")
+app.secret_key = os.getenv(
+    "GOOGLE_CLIENT_SECRET"
+)  # make sure this matches with that's in client_secret.json
+
+os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"  # to allow Http traffic for local dev
+
+GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
+client_secrets_file = os.path.join(
+    pathlib.Path(__file__).parent.parent.parent, "client_secret.json"
+)
+print("client_secrets_file", client_secrets_file)
+
+
+flow = Flow.from_client_secrets_file(
+    client_secrets_file=client_secrets_file,
+    scopes=[
+        "https://www.googleapis.com/auth/userinfo.profile",
+        "https://www.googleapis.com/auth/userinfo.email",
+        "openid",
+    ],
+    redirect_uri="http://localhost/callback",
+)
+
+
+def login_is_required(function):
+    def wrapper(*args, **kwargs):
+        if "google_id" not in session:
+            return abort(401)  # Authorization required
+        else:
+            return function()
+
+    return wrapper
+
+
+
 @app.route("/")
 def index():
     return render_template("index.html")
+
+
+@app.route("/logins")
+def logins():
+    authorization_url, state = flow.authorization_url()
+    session["state"] = state
+    return redirect(authorization_url)
+
+
+@app.route("/callback")
+def callback():
+    flow.fetch_token(authorization_response=request.url)
+
+    if not session["state"] == request.args["state"]:
+        abort(500)  # State does not match!
+
+    credentials = flow.credentials
+    request_session = requests.session()
+    cached_session = cachecontrol.CacheControl(request_session)
+    token_request = google.auth.transport.requests.Request(session=cached_session)
+
+    id_info = id_token.verify_oauth2_token(
+        id_token=credentials._id_token, request=token_request, audience=GOOGLE_CLIENT_ID
+    )
+
+    session["google_id"] = id_info.get("sub")
+    session["name"] = id_info.get("name")
+    return redirect("/protected_area")
+
+
+@app.route("/protected_area")
+@login_is_required
+def protected_area():
+    return (
+        f"Hello {session['name']}! <br/> <a href='/logout'><button>Logout</button></a>"
+    )
+
+
+
 
 
 @app.route("/reader")
@@ -33,30 +117,32 @@ def edit():
     if not "user_id" in session:
         return redirect("/")
 
-
     user = User.get_logged_in_user()
     return render_template("edit_user.html", selected_user=user)
 
-@app.route('/<int:user_id>/edit', methods=['POST'])
+
+@app.route("/<int:user_id>/edit", methods=["POST"])
 def edit_user_form(user_id):
     print(user_id)
-# validation needs to be updated to allow for the previous email
+    # validation needs to be updated to allow for the previous email
     if not User.validate_reg(request.form):
         return redirect("/reader/account/edit")
-    
+
     data = {
-        'user_id': session["user_id"],
-        'first_name': request.form['first_name'],
-        'last_name': request.form['last_name'],
-        'email': request.form['email'],
-        'phone_number': request.form['phone_number'],
-        'password': bcrypt.generate_password_hash(request.form["password"]).decode(
-            "utf-8")
+        "user_id": session["user_id"],
+        "first_name": request.form["first_name"],
+        "last_name": request.form["last_name"],
+        "email": request.form["email"],
+        "phone_number": request.form["phone_number"],
+        "password": bcrypt.generate_password_hash(request.form["password"]).decode(
+            "utf-8"
+        ),
     }
-    print('************************')
+    print("************************")
     print(data)
     User.edit(data)
-    return redirect('/reader/account')
+    return redirect("/reader/account")
+
 
 @app.route("/driver")
 def driver():
